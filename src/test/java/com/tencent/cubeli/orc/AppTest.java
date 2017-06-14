@@ -1,4 +1,4 @@
-package com.tencent.cubeli;
+package com.tencent.cubeli.orc;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
