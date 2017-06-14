@@ -18,33 +18,43 @@ import java.io.FileReader;
 
 public class ORCWriterTest {
 
+    public static TypeDescription schema = TypeDescription.createStruct()
+            .addField(Lineitem.l_orderkey, TypeDescription.createLong())
+            .addField(Lineitem.l_partkey, TypeDescription.createLong())
+            .addField(Lineitem.l_suppkey, TypeDescription.createLong())
+            .addField(Lineitem.l_linenumber, TypeDescription.createLong())
+            .addField(Lineitem.l_quantity, TypeDescription.createDouble())
+            .addField(Lineitem.l_extendedprice, TypeDescription.createDouble())
+            .addField(Lineitem.l_discount, TypeDescription.createDouble())
+            .addField(Lineitem.l_tax, TypeDescription.createDouble())
+            .addField(Lineitem.l_retrunflag, TypeDescription.createString())
+            .addField(Lineitem.l_linestatus, TypeDescription.createString())
+            .addField(Lineitem.l_shipdate, TypeDescription.createString())
+            .addField(Lineitem.l_commitdate, TypeDescription.createString())
+            .addField(Lineitem.l_receiptdate, TypeDescription.createString())
+            .addField(Lineitem.l_shipinstruct, TypeDescription.createString())
+            .addField(Lineitem.l_shipmode, TypeDescription.createString())
+            .addField(Lineitem.l_comment, TypeDescription.createString());
     public static void main(String[] args) throws Exception {
-        //定义ORC数据结构，即表结构
-//		CREATE TABLE lxw_orc1 (
-//		 field1 STRING,
-//		 field2 STRING,
-//		 field3 STRING
-//		) stored AS orc;
 
         String lineitemDataFile = args[0];
-
-        TypeDescription schema = TypeDescription.createStruct()
-                .addField(Lineitem.l_orderkey, TypeDescription.createLong())
-                .addField(Lineitem.l_partkey, TypeDescription.createLong())
-                .addField(Lineitem.l_suppkey, TypeDescription.createLong())
-                .addField(Lineitem.l_linenumber, TypeDescription.createLong())
-                .addField(Lineitem.l_quantity, TypeDescription.createDouble())
-                .addField(Lineitem.l_extendedprice, TypeDescription.createDouble())
-                .addField(Lineitem.l_discount, TypeDescription.createDouble())
-                .addField(Lineitem.l_tax, TypeDescription.createDouble())
-                .addField(Lineitem.l_retrunflag, TypeDescription.createString())
-                .addField(Lineitem.l_linestatus, TypeDescription.createString())
-                .addField(Lineitem.l_shipdate, TypeDescription.createString())
-                .addField(Lineitem.l_commitdate, TypeDescription.createString())
-                .addField(Lineitem.l_receiptdate, TypeDescription.createString())
-                .addField(Lineitem.l_shipinstruct, TypeDescription.createString())
-                .addField(Lineitem.l_shipmode, TypeDescription.createString())
-                .addField(Lineitem.l_commitdate, TypeDescription.createString());
+//        TypeDescription schema = TypeDescription.createStruct()
+//                .addField(Lineitem.l_orderkey, TypeDescription.createLong())
+//                .addField(Lineitem.l_partkey, TypeDescription.createLong())
+//                .addField(Lineitem.l_suppkey, TypeDescription.createLong())
+//                .addField(Lineitem.l_linenumber, TypeDescription.createLong())
+//                .addField(Lineitem.l_quantity, TypeDescription.createDouble())
+//                .addField(Lineitem.l_extendedprice, TypeDescription.createDouble())
+//                .addField(Lineitem.l_discount, TypeDescription.createDouble())
+//                .addField(Lineitem.l_tax, TypeDescription.createDouble())
+//                .addField(Lineitem.l_retrunflag, TypeDescription.createString())
+//                .addField(Lineitem.l_linestatus, TypeDescription.createString())
+//                .addField(Lineitem.l_shipdate, TypeDescription.createString())
+//                .addField(Lineitem.l_commitdate, TypeDescription.createString())
+//                .addField(Lineitem.l_receiptdate, TypeDescription.createString())
+//                .addField(Lineitem.l_shipinstruct, TypeDescription.createString())
+//                .addField(Lineitem.l_shipmode, TypeDescription.createString())
+//                .addField(Lineitem.l_commitdate, TypeDescription.createString());
         //输出ORC文件本地绝对路径
 //        String lxw_orc1_file = "lineitem.orc";
         String orcfilePath = "hdfs://localhost:9000/testorc/orcfile";
