@@ -47,7 +47,7 @@ public class LuceneWriterTest {
 
     public static void writeIndex(String sourceFile) throws IOException{
 
-        Path path=new Path("hdfs://localhost:9000/luceneorc");
+        Path path=new Path("hdfs://hdfsCluster/tmp/lucenedata");
         Configuration conf=new Configuration();
         conf.setBoolean("fs.hdfs.impl.disable.cache", true);
         HdfsDirectory directory=new HdfsDirectory(path, conf);

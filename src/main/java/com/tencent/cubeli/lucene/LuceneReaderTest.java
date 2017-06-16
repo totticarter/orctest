@@ -15,25 +15,61 @@ import java.io.IOException;
  */
 public class LuceneReaderTest {
 
+    static double oneBatchTime = 0.0;
     public static void main(String[] args) throws IOException {
 
 
-        Path path=new Path("hdfs://localhost:9000/luceneorc");
+        Path path=new Path("hdfs://hdfsCluster/tmp/lucenedata");
         Configuration conf=new Configuration();
         conf.setBoolean("fs.hdfs.impl.disable.cache", true);
         HdfsDirectory directory=new HdfsDirectory(path, conf);
 
         DirectoryReader topReader = DirectoryReader.open(directory);
 
-
-
-
         LeafReader leafReader = topReader.leaves().get(0).reader();
 
-        NumericDocValues docVals1 = leafReader.getNumericDocValues("l_orderkey");
-        System.out.println(docVals1.get(0));
-        System.out.println(docVals1.get(2));
+//        NumericDocValues docVals1 = leafReader.getNumericDocValues("l_orderkey");
+//        System.out.println(docVals1.get(0));
+//        System.out.println(docVals1.get(2));
 
+        long start = System.currentTimeMillis();
+
+        NumericDocValues orderkeyDocValues = leafReader.getNumericDocValues("l_orderkey");
+        NumericDocValues partkeyDocValues = leafReader.getNumericDocValues("l_partkey");
+        NumericDocValues suppkeyDocValues = leafReader.getNumericDocValues("l_suppkey");
+        NumericDocValues quantityDocValues = leafReader.getNumericDocValues("l_quantity");
+        NumericDocValues extendedpriceDocValues = leafReader.getNumericDocValues("l_extendedprice");
+        NumericDocValues discountDocValues = leafReader.getNumericDocValues("l_discount");
+        NumericDocValues taxDocValues = leafReader.getNumericDocValues("l_tax");
+
+        for(int i = 0; i < leafReader.maxDoc(); i++){
+
+            long oneRowStart = System.nanoTime();
+            orderkeyDocValues.get(i);
+//            partkeyDocValues.get(i);
+//            suppkeyDocValues.get(i);
+//            quantityDocValues.get(i);
+//            extendedpriceDocValues.get(i);
+//            discountDocValues.get(i);
+//            taxDocValues.get(i);
+
+            long oneRowEnd = System.nanoTime();
+            double oneRowTime = ((oneRowEnd-oneRowStart)/1000);
+            if(oneRowTime > 0){
+
+                System.out.println("oneRowTime is: " + oneRowTime + ", row count is: " + i);
+            }
+            oneBatchTime += oneRowTime;
+            if(i % 1000 == 0){
+
+                System.out.println("1000 row takes: " + oneBatchTime + "us");
+                oneBatchTime = 0;
+            }
+
+        }
+
+        long end = System.currentTimeMillis();
+        System.out.println("read " + leafReader.maxDoc() + " rows takes: " + (end-start) + " ms");
 
 //        BinaryDocValues docVals2 = leafReader.getBinaryDocValues(BINARY_FIELD);
 //        BytesRef bytesRef = docVals2.get(0);
