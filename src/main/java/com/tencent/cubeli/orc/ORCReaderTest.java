@@ -19,11 +19,7 @@ import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapred.RecordReader;
 import org.apache.hadoop.mapred.Reporter;
 
-/**
- * lxw的大数据田地 -- http://lxw1234.com
- * @author lxw.com
- *
- */
+
 public class ORCReaderTest {
 
     public static void main(String[] args) throws Exception {

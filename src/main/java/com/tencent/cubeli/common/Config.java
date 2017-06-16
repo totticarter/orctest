@@ -12,6 +12,7 @@ public class Config {
     public static String compress = null;
     public static String orcFilePath = null;
     public static String lineitemDataFile = null;
+    public static String luceneIndexDir = null;
 
     static {
         prop = new Properties();
@@ -21,6 +22,7 @@ public class Config {
             compress = prop.getProperty("compress", "ZIP");
             orcFilePath = prop.getProperty("orc.file.path");
             lineitemDataFile = prop.getProperty("lineitem.data.file");
+            luceneIndexDir = prop.getProperty("lucene.index.idr");
 
         }catch (FileNotFoundException f){
 

@@ -4,6 +4,7 @@ package com.tencent.cubeli.lucene;
  * Created by waixingren on 6/14/17.
  */
 
+import com.tencent.cubeli.common.Config;
 import com.tencent.cubeli.orc.ORCWriterTest;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -47,7 +48,7 @@ public class LuceneWriterTest {
 
     public static void writeIndex(String sourceFile) throws IOException{
 
-        Path path=new Path("hdfs://hdfsCluster/tmp/lucenedata");
+        Path path= new Path(Config.luceneIndexDir);
         Configuration conf=new Configuration();
         conf.setBoolean("fs.hdfs.impl.disable.cache", true);
         HdfsDirectory directory=new HdfsDirectory(path, conf);

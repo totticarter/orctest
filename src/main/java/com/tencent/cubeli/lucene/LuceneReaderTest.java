@@ -1,5 +1,6 @@
 package com.tencent.cubeli.lucene;
 
+import com.tencent.cubeli.common.Config;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.lucene.index.DirectoryReader;
@@ -19,7 +20,7 @@ public class LuceneReaderTest {
     public static void main(String[] args) throws IOException {
 
 
-        Path path=new Path("hdfs://hdfsCluster/tmp/lucenedata");
+        Path path=new Path(Config.luceneIndexDir);
         Configuration conf=new Configuration();
         conf.setBoolean("fs.hdfs.impl.disable.cache", true);
         HdfsDirectory directory=new HdfsDirectory(path, conf);
