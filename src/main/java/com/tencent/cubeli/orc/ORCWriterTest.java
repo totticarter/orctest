@@ -3,6 +3,8 @@ package com.tencent.cubeli.orc;
 
 import com.tencent.cubeli.common.Config;
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileStatus;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hive.ql.exec.vector.BytesColumnVector;
 import org.apache.hadoop.hive.ql.exec.vector.DoubleColumnVector;
@@ -40,13 +42,25 @@ public class ORCWriterTest {
             .addField(Lineitem.l_comment, TypeDescription.createString());
     public static void main(String[] args) throws Exception {
 
+
+//        Configuration conf1 = new Configuration();
+//        FileSystem fileSystem = FileSystem.get(conf1);
+//        long start = System.currentTimeMillis();
+//        FileStatus[] fileStatuses = fileSystem.listStatus(new Path("/tmp"));
+//        long end1 = System.currentTimeMillis();
+//        System.out.println("ls tmp takes: " + (end1-start) + "ms");
+//        fileStatuses = fileSystem.listStatus(new Path("/tmp/lstest/"));
+//        long end2 = System.currentTimeMillis();
+//        System.out.println("ls /tmp/lstest first takes: " + (end2 - end1) + "ms");
+//        fileStatuses = fileSystem.listStatus(new Path("/tmp/lstest"));
+//        long end3 = System.currentTimeMillis();
+//        System.out.println("ls /tmp/lstest second takes:" + (end3-end2) + "ms");
+
+//
+//
         String lineitemDataFile = Config.lineitemDataFile;
         String orcfilePath = Config.orcFilePath;
         Configuration conf = new Configuration();
-//        conf.addResource("/etc/hadoop/conf/hdfs-site.xml");
-//        conf.addResource("/etc/hadoop/conf/core-site.xml");
-
-
         Iterator<Map.Entry<String, String>> confIter = conf.iterator();
 
         while (confIter.hasNext()) {
@@ -75,11 +89,12 @@ public class ORCWriterTest {
 
         VectorizedRowBatch batch = schema.createRowBatch();
         int rowCount = 0;
+        long start = System.currentTimeMillis();
         while ((oneLine = reader.readLine()) != null) {
 
             rowCount++;
 
-            if(rowCount % 100 == 0){
+            if(rowCount % 10000 == 0){
                 System.out.println(rowCount);
             }
             String[] datas = oneLine.split("\\|");
@@ -115,6 +130,8 @@ public class ORCWriterTest {
         System.out.println("batch size is: " + batch.size);
         writer.addRowBatch(batch);
         writer.close();
+        long end = System.currentTimeMillis();
+        System.out.println("write orc takes: " + (end-start) + " ms");
     }
 
     private static CompressionKind getCompressionKind() {

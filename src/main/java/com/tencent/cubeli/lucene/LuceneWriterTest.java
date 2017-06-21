@@ -60,9 +60,10 @@ public class LuceneWriterTest {
         String oneLine = null;
 
         int rowCount = 0;
+        long start = System.currentTimeMillis();
         while ((oneLine = reader.readLine()) != null) {
 
-            if(rowCount++ % 100 == 0){
+            if(rowCount++ % 10000 == 0){
 
                 System.out.println(rowCount);
             }
@@ -87,9 +88,12 @@ public class LuceneWriterTest {
             }
             writer.addDocument(doc);
         }
-
-        writer.forceMerge(1);
+        long end1 = System.currentTimeMillis();
+        writer.forceMerge(Config.luceneMergeSize);
+        System.out.println("end1 write takes: " + (end1-start) + " ms");
+        long end2 = System.currentTimeMillis();
         writer.commit();
+        System.out.println("end2 write takes: " + (end2-start) + " ms");
         writer.close();
     }
 }

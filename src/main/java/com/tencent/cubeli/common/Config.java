@@ -13,6 +13,8 @@ public class Config {
     public static String orcFilePath = null;
     public static String lineitemDataFile = null;
     public static String luceneIndexDir = null;
+    public static int readFieldCount = 0;
+    public static int luceneMergeSize = 0;
 
     static {
         prop = new Properties();
@@ -22,7 +24,9 @@ public class Config {
             compress = prop.getProperty("compress", "ZIP");
             orcFilePath = prop.getProperty("orc.file.path");
             lineitemDataFile = prop.getProperty("lineitem.data.file");
-            luceneIndexDir = prop.getProperty("lucene.index.idr");
+            luceneIndexDir = prop.getProperty("lucene.index.dir");
+            readFieldCount = Integer.parseInt(prop.getProperty("read.field.count"));
+            luceneMergeSize = Integer.parseInt(prop.getProperty("lucene.merge.size"));
 
         }catch (FileNotFoundException f){
 
