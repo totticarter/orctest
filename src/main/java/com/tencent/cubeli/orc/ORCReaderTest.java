@@ -66,11 +66,14 @@ public class ORCReaderTest {
             long offset = reader.getPos();
             while (reader.next(key, value)) {
                 count++;
+                if(count % 10000000 == 0){
+                    System.out.println("have read: " + count + "rows");
+                }
 
                 for (int fieldIdx = 0; fieldIdx < Config.readFieldCount; fieldIdx++) {
 
                     Object object = inspector.getStructFieldData(value, fields.get(fieldIdx));
-                    System.out.println(object.toString());
+//                    System.out.println(object.toString());
                 }
             }
 
