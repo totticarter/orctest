@@ -3,13 +3,11 @@ package com.tencent.cubeli.orc;
 
 import com.tencent.cubeli.common.Config;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileStatus;
-import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.hive.ql.exec.vector.BytesColumnVector;
 import org.apache.hadoop.hive.ql.exec.vector.DoubleColumnVector;
-import org.apache.hadoop.hive.ql.exec.vector.VectorizedRowBatch;
 import org.apache.hadoop.hive.ql.exec.vector.LongColumnVector;
+import org.apache.hadoop.hive.ql.exec.vector.VectorizedRowBatch;
 import org.apache.orc.CompressionKind;
 import org.apache.orc.OrcFile;
 import org.apache.orc.TypeDescription;
@@ -103,21 +101,19 @@ public class ORCWriterTest {
                 if(typeName.equals("LONG")){
 
                     Long val = Long.parseLong(datas[i]);
-//                    ((LongColumnVector) batch.cols[i]).fill(val.longValue());
                     LongColumnVector longColumnVector = ((LongColumnVector) batch.cols[i]);
                     longColumnVector.vector[batch.size] = val;
                 }else if(typeName.equals("DOUBLE")){
 
                     Double val = Double.parseDouble(datas[i]);
-//                    ((DoubleColumnVector)batch.cols[i]).fill(val);
                     DoubleColumnVector doubleColumnVector = ((DoubleColumnVector)batch.cols[i]);
                     doubleColumnVector.vector[batch.size] = val;
                 }else if(typeName.equals("STRING")){
 
                     String val = datas[i];
-//                    ((BytesColumnVector)batch.cols[i]).fill(val.getBytes());
                     BytesColumnVector bytesColumnVector = ((BytesColumnVector)batch.cols[i]);
-                    bytesColumnVector.vector[batch.size] = val.getBytes();
+//                    bytesColumnVector.vector[batch.size] = val.getBytes();
+                    bytesColumnVector.setVal(batch.size, val.getBytes());
                 }
                 if (batch.size == batch.getMaxSize()-1) {
                     System.out.println("batch.size is: " + batch.size);
