@@ -15,6 +15,10 @@ public class Config {
     public static String luceneIndexDir = null;
     public static int readFieldCount = 0;
     public static int luceneMergeSize = 0;
+    public static String sequencePath = null;
+    public static int sequenceRocordSize = 0;
+    public static long syncNum = 0;
+    public static String testString = null;
 
     static {
         prop = new Properties();
@@ -27,6 +31,11 @@ public class Config {
             luceneIndexDir = prop.getProperty("lucene.index.dir");
             readFieldCount = Integer.parseInt(prop.getProperty("read.field.count"));
             luceneMergeSize = Integer.parseInt(prop.getProperty("lucene.merge.size"));
+            sequencePath = prop.getProperty("sequence.file.path");
+            sequenceRocordSize =  Integer.parseInt(prop.getProperty("sequence.rocord.size"));
+            syncNum = Long.parseLong(prop.getProperty("sync.num"));
+            testString = prop.getProperty("sequence.test.string");
+
 
         }catch (FileNotFoundException f){
 
