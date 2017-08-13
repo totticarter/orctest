@@ -19,6 +19,7 @@ public class Config {
     public static int sequenceRocordSize = 0;
     public static long syncNum = 0;
     public static String testString = null;
+    public static int chunkSize;
 
     static {
         prop = new Properties();
